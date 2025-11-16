@@ -1,0 +1,1 @@
+{"version":3,"file":"StartNode.d.ts","sourceRoot":"","sources":["StartNode.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,eAAe,CAAC;AACzC,OAAO,KAAK,EAAE,mBAAmB,EAAE,MAAM,eAAe,CAAC;AAEzD,qBAAa,SAAU,SAAQ,QAAQ;IAC/B,OAAO,CAAC,KAAK,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,GAAG,OAAO,CAAC,mBAAmB,CAAC;CAsBxE"}
