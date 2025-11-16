@@ -1,0 +1,96 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+# Note: package-lock.json should be committed
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+*.js.map
+*.d.ts.map
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+*.lcov
+.nyc_output/
+.jest/
+
+# Storage directories
+storage/
+uploads/
+temp/
+*.tmp
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Vite
+.vite/
+dist-ssr/
+
+# Backend specific
+backend/dist/
+backend/logs/
+backend/storage/
+backend/.env
+backend/.env.local
+
+# Frontend specific
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.vite/
+
+# Drizzle (keep meta folder, ignore SQL files)
+backend/src/database/migrations/*.sql
+!backend/src/database/migrations/meta/
+backend/drizzle/
+
+# Temporary files
+*.tmp
+*.temp
