@@ -24,6 +24,9 @@ export * from './schema/video.ts';
 // Import trends schema
 export * from './schema/trends.ts';
 
+// Import settings schema
+export * from './schema/settings.ts';
+
 // Workflow table with JSON columns for nodes/edges
 export const workflows = pgTable('workflows', {
   id: serial('id').primaryKey(),

@@ -29,8 +29,10 @@ app.use('/api/workflows', workflowRoutes);
 // Import additional routes
 import mediaRoutes from './routes/mediaRoutes.js';
 import apiRoutes from './routes/apiRoutes.js';
+import settingsRoutes from './routes/settingsRoutes.js';
 app.use('/api/media', mediaRoutes);
 app.use('/api/api', apiRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Error handler (must be last)
 import { errorHandler } from './middleware/errorHandler.js';

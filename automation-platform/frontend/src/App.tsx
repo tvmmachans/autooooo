@@ -10,6 +10,7 @@ import { Workflows } from './pages/Workflows';
 import { AIStudio } from './pages/AIStudio';
 import { VideoStudio } from './pages/VideoStudio';
 import { Trends } from './pages/Trends';
+import { Settings } from './pages/Settings';
 import { OnboardingTour } from './components/onboarding/OnboardingTour';
 
 const queryClient = new QueryClient();
@@ -35,12 +36,7 @@ function App() {
                 <Route path="/ai-studio" element={<AIStudio />} />
                 <Route path="/video-studio" element={<VideoStudio />} />
                 <Route path="/trends" element={<Trends />} />
-                <Route path="/settings" element={
-                  <div className="p-8">
-                    <h1 className="text-4xl font-bold mb-4">Settings</h1>
-                    <p className="text-gray-600 dark:text-gray-400">Settings page coming soon...</p>
-                  </div>
-                } />
+                <Route path="/settings/*" element={<Settings />} />
               </Routes>
             </AnimatedLayout>
           </div>
