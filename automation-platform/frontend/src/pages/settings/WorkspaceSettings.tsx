@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { SettingsSection } from '../../components/settings/SettingsSection';
@@ -25,13 +25,14 @@ export const WorkspaceSettings: React.FC = () => {
       });
       return res.data;
     },
-    onSuccess: (data) => {
-      if (data.workspace) {
-        setWorkspaceName(data.workspace.name);
-        setDescription(data.workspace.description || '');
-      }
-    },
   });
+
+  useEffect(() => {
+    if (workspaceData?.workspace) {
+      setWorkspaceName(workspaceData.workspace.name);
+      setDescription(workspaceData.workspace.description || '');
+    }
+  }, [workspaceData]);
 
   const updateWorkspaceMutation = useMutation({
     mutationFn: async (data: any) => {

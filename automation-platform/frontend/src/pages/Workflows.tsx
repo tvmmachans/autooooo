@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { WorkflowCanvas } from '../components/workflow/WorkflowCanvas';
-import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Plus, Play, Save } from 'lucide-react';
+import type { Node, Edge } from 'reactflow';
 
 export const Workflows: React.FC = () => {
-  const [nodes, setNodes] = React.useState([]);
-  const [edges, setEdges] = React.useState([]);
+  const [nodes, setNodes] = React.useState<Node[]>([]);
+  const [edges, setEdges] = React.useState<Edge[]>([]);
 
   return (
     <div className="h-screen flex flex-col">

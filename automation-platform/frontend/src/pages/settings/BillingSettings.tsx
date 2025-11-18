@@ -2,7 +2,7 @@ import React from 'react';
 import { SettingsSection } from '../../components/settings/SettingsSection';
 import { SettingItem } from '../../components/settings/SettingItem';
 import { Button } from '../../components/ui/Button';
-import { CreditCard, TrendingUp, Zap } from 'lucide-react';
+import { CreditCard, TrendingUp } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
 
 export const BillingSettings: React.FC = () => {

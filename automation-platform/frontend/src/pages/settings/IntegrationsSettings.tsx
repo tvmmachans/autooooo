@@ -128,19 +128,6 @@ export const IntegrationsSettings: React.FC = () => {
     },
   });
 
-  const connectIntegrationMutation = useMutation({
-    mutationFn: async (data: any) => {
-      const token = localStorage.getItem('accessToken');
-      const res = await axios.post(`${API_BASE_URL}/api/settings/integrations`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return res.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['integrations'] });
-    },
-  });
-
   const disconnectIntegrationMutation = useMutation({
     mutationFn: async (id: number) => {
       const token = localStorage.getItem('accessToken');

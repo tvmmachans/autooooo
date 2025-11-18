@@ -1,105 +1,93 @@
 import { useMemo } from 'react';
-import { useWorkflowStore } from '../store/workflowStore.js';
-import type { WorkflowNode, Edge } from '../components/workflow/types.js';
+import type { WorkflowNode } from '../components/workflow/types.js';
 import { NodeType } from '../components/workflow/types.js';
-import type { Workflow } from '../types/database.js';
-import { validateCompleteWorkflow, createValidationSummary } from '../components/workflow/validation.js';
-import { nodeTypes } from '../components/workflow/NodeTypes.js';
+import type { Workflow } from '../types/database';
+import {
+  validateCompleteWorkflow,
+  createValidationSummary,
+  type ValidationResult,
+  type ValidationSummary,
+} from '../components/workflow/validation.js';
+import type { Edge as WorkflowEdge } from '../types/database';
 
-// Hook for managing workflow types and validation
-export const useWorkflowTypes = () => {
-  const { workflow, nodes, edges, updateWorkflow, updateNodes, updateEdges } = useWorkflowStore();
+// Lightweight, self-contained workflow types hook.
+// Currently no components consume this hook, so it is implemented as a
+// read-only helper around the passed-in workflow data.
 
-  // Memoized validation result
-  const validationResult = useMemo(() => {
-    return validateCompleteWorkflow(workflow, nodes);
-  }, [workflow, nodes]);
+export interface UseWorkflowTypesParams {
+  workflow?: Partial<Workflow>;
+  nodes?: WorkflowNode[];
+  edges?: WorkflowEdge[];
+}
 
-  // Memoized validation summary
-  const validationSummary = useMemo(() => {
-    return createValidationSummary(validationResult);
-  }, [validationResult]);
+export const useWorkflowTypes = (params: UseWorkflowTypesParams = {}) => {
+  const workflow = params.workflow ?? ({} as Partial<Workflow>);
+  const nodes = params.nodes ?? ([] as WorkflowNode[]);
+  const edges = params.edges ?? ([] as WorkflowEdge[]);
 
-  // Get node type information
+  const validationResult: ValidationResult = useMemo(
+    () => validateCompleteWorkflow(workflow, nodes),
+    [workflow, nodes]
+  );
+
+  const validationSummary: ValidationSummary = useMemo(
+    () => createValidationSummary(validationResult),
+    [validationResult]
+  );
+
   const getNodeTypeInfo = (type: NodeType) => {
-    const nodeTypeMap = {
+    const nodeTypeMap: Record<NodeType, { label: string; color: string; description: string; icon: string }> = {
       [NodeType.START]: {
         label: 'Start',
         color: 'purple',
         description: 'Workflow entry point',
-        icon: '▶️'
+        icon: '▶️',
       },
       [NodeType.ACTION]: {
         label: 'Action',
         color: 'blue',
         description: 'Execute an action',
-        icon: '⚡'
+        icon: '⚡',
       },
       [NodeType.CONDITION]: {
         label: 'Condition',
         color: 'green',
         description: 'Evaluate conditions',
-        icon: '❓'
+        icon: '❓',
       },
       [NodeType.END]: {
         label: 'End',
         color: 'red',
         description: 'Workflow exit point',
-        icon: '⏹️'
-      }
+        icon: '⏹️',
+      },
     };
+
     return nodeTypeMap[type];
   };
 
-  // Get available node types for adding to workflow
-  const availableNodeTypes = useMemo(() => {
-    return Object.values(NodeType).map(type => ({
-      type,
-      ...getNodeTypeInfo(type)
-    }));
-  }, []);
+  const availableNodeTypes = useMemo(
+    () =>
+      (Object.values(NodeType) as NodeType[]).map((type) => ({
+        type,
+        ...getNodeTypeInfo(type),
+      })),
+    []
+  );
 
-  // Check if workflow is valid for execution
-  const isWorkflowValid = useMemo(() => {
-    return validationResult.isValid && validationSummary.criticalErrors.length === 0;
-  }, [validationResult.isValid, validationSummary.criticalErrors]);
+  const getNodesByType = (type: NodeType) => nodes.filter((node) => node.type === type);
 
-  // Get nodes by type
-  const getNodesByType = (type: NodeType) => {
-    return nodes.filter(node => node.type === type);
-  };
-
-  // Get connected nodes
-  const getConnectedNodes = (nodeId: string) => {
-    const outgoingEdges = edges.filter(edge => edge.source === nodeId);
-    const incomingEdges = edges.filter(edge => edge.target === nodeId);
-
-    return {
-      outgoing: outgoingEdges.map(edge => nodes.find(n => n.id === edge.target)).filter(Boolean),
-      incoming: incomingEdges.map(edge => nodes.find(n => n.id === edge.source)).filter(Boolean)
-    };
-  };
-
-  // Check if node can be added
-  const canAddNode = (type: NodeType) => {
-    switch (type) {
-      case NodeType.START:
-        return getNodesByType(NodeType.START).length === 0;
-      case NodeType.END:
-        return true; // Multiple end nodes allowed
-      default:
-        return getNodesByType(NodeType.START).length > 0; // Need start node first
-    }
-  };
-
-  // Get workflow statistics
   const workflowStats = useMemo(() => {
     const nodeCount = nodes.length;
     const edgeCount = edges.length;
-    const nodeTypeCounts = Object.values(NodeType).reduce((acc, type) => {
-      acc[type] = getNodesByType(type).length;
-      return acc;
-    }, {} as Record<NodeType, number>);
+
+    const nodeTypeCounts = (Object.values(NodeType) as NodeType[]).reduce(
+      (acc, type) => {
+        acc[type] = getNodesByType(type).length;
+        return acc;
+      },
+      {} as Record<NodeType, number>
+    );
 
     return {
       nodeCount,
@@ -107,63 +95,73 @@ export const useWorkflowTypes = () => {
       nodeTypeCounts,
       hasStartNode: nodeTypeCounts[NodeType.START] > 0,
       hasEndNode: nodeTypeCounts[NodeType.END] > 0,
-      isConnected: edgeCount > 0
+      isConnected: edgeCount > 0,
     };
   }, [nodes, edges]);
 
-  // Export workflow data
-  const exportWorkflow = () => {
+  const isWorkflowValid = useMemo(
+    () => validationResult.isValid && validationSummary.criticalErrors.length === 0,
+    [validationResult, validationSummary]
+  );
+
+  const getConnectedNodes = (nodeId: string) => {
+    const outgoingEdges = edges.filter((edge) => edge.source === nodeId);
+    const incomingEdges = edges.filter((edge) => edge.target === nodeId);
+
     return {
-      workflow,
-      nodes,
-      edges,
-      validation: validationResult,
-      stats: workflowStats
+      outgoing: outgoingEdges.map((edge) => nodes.find((n) => n.id === edge.target)).filter(Boolean) as WorkflowNode[],
+      incoming: incomingEdges.map((edge) => nodes.find((n) => n.id === edge.source)).filter(Boolean) as WorkflowNode[],
     };
   };
 
-  // Import workflow data
-  const importWorkflow = (data: { workflow: Partial<Workflow>; nodes: WorkflowNode[]; edges: Edge[] }) => {
-    updateWorkflow(data.workflow);
-    updateNodes(data.nodes);
-    updateEdges(data.edges);
+  const canAddNode = (type: NodeType) => {
+    switch (type) {
+      case NodeType.START:
+        return getNodesByType(NodeType.START).length === 0;
+      case NodeType.END:
+        return true;
+      default:
+        return getNodesByType(NodeType.START).length > 0;
+    }
+  };
+
+  const exportWorkflow = () => ({
+    workflow,
+    nodes,
+    edges,
+    validation: validationResult,
+    stats: workflowStats,
+  });
+
+  const importWorkflow = (_data: { workflow: Partial<Workflow>; nodes: WorkflowNode[]; edges: WorkflowEdge[] }) => {
+    // No-op placeholder – mutating workflow state is currently handled elsewhere.
   };
 
   return {
-    // Data
     workflow,
     nodes,
     edges,
     validationResult,
     validationSummary,
     workflowStats,
-
-    // Computed values
     isWorkflowValid,
     availableNodeTypes,
-
-    // Methods
     getNodeTypeInfo,
     getNodesByType,
     getConnectedNodes,
     canAddNode,
     exportWorkflow,
     importWorkflow,
-
-    // Store actions
-    updateWorkflow,
-    updateNodes,
-    updateEdges
   };
 };
 
-// Hook for managing individual node operations
-export const useNodeOperations = (nodeId?: string) => {
-  const { nodes, edges, updateNodes, updateEdges } = useWorkflowStore();
+// Legacy-compatible stubs for node and edge operations.
+// These are provided to keep the public API stable; they currently do not
+// mutate any shared state.
 
-  const node = nodeId ? nodes.find(n => n.id === nodeId) : null;
+export const useNodeOperations = (nodeId?: string, nodes: WorkflowNode[] = [], edges: WorkflowEdge[] = []) => {
+  const node = nodeId ? nodes.find((n) => n.id === nodeId) ?? null : null;
 
-  // Get node configuration form component
   const getNodeConfigForm = (type: NodeType) => {
     switch (type) {
       case NodeType.START:
@@ -179,36 +177,25 @@ export const useNodeOperations = (nodeId?: string) => {
     }
   };
 
-  // Update node configuration
-  const updateNodeConfig = (config: any) => {
-    if (!node) return;
-
-    const updatedNode = { ...node, config };
-    updateNodes(nodes.map(n => n.id === nodeId ? updatedNode : n));
+  const updateNodeConfig = (_config: any) => {
+    // No-op – state updates should be handled by the caller.
   };
 
-  // Validate single node
   const validateNode = () => {
     if (!node) return { isValid: false, errors: ['Node not found'] };
 
-    // Simple validation - in real implementation, use the validation system
     const errors: string[] = [];
-
     if (!node.id) errors.push('Node ID is required');
     if (!node.type) errors.push('Node type is required');
 
-    return {
-      isValid: errors.length === 0,
-      errors
-    };
+    return { isValid: errors.length === 0, errors };
   };
 
-  // Get node connections
   const connections = useMemo(() => {
-    if (!nodeId) return { incoming: [], outgoing: [] };
+    if (!nodeId) return { incoming: [] as WorkflowEdge[], outgoing: [] as WorkflowEdge[] };
 
-    const incoming = edges.filter(edge => edge.target === nodeId);
-    const outgoing = edges.filter(edge => edge.source === nodeId);
+    const incoming = edges.filter((edge) => edge.target === nodeId);
+    const outgoing = edges.filter((edge) => edge.source === nodeId);
 
     return { incoming, outgoing };
   }, [nodeId, edges]);
@@ -218,34 +205,27 @@ export const useNodeOperations = (nodeId?: string) => {
     connections,
     getNodeConfigForm,
     updateNodeConfig,
-    validateNode
+    validateNode,
   };
 };
 
-// Hook for managing edge operations
-export const useEdgeOperations = () => {
-  const { edges, updateEdges } = useWorkflowStore();
-
-  // Add edge
-  const addEdge = (edge: Edge) => {
-    updateEdges([...edges, edge]);
+export const useEdgeOperations = (edges: WorkflowEdge[] = [], _setEdges?: (edges: WorkflowEdge[]) => void) => {
+  const addEdge = (_edge: WorkflowEdge) => {
+    // No-op – state updates should be handled by the caller.
   };
 
-  // Remove edge
-  const removeEdge = (edgeId: string) => {
-    updateEdges(edges.filter(edge => edge.id !== edgeId));
+  const removeEdge = (_edgeId: string) => {
+    // No-op placeholder.
   };
 
-  // Update edge
-  const updateEdge = (edgeId: string, updates: Partial<Edge>) => {
-    updateEdges(edges.map(edge =>
-      edge.id === edgeId ? { ...edge, ...updates } : edge
-    ));
+  const updateEdge = (_edgeId: string, _updates: Partial<WorkflowEdge>) => {
+    // No-op placeholder.
   };
 
   return {
+    edges,
     addEdge,
     removeEdge,
-    updateEdge
+    updateEdge,
   };
 };

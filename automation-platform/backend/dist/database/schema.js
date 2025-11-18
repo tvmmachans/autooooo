@@ -2,8 +2,22 @@ import { pgTable, serial, text, timestamp, jsonb, integer, boolean, uuid, index,
 import { sql } from 'drizzle-orm';
 import { relations } from 'drizzle-orm';
 // Import auth schema
-export * from './schema/auth.js';
-import { users, roles, userRoles, sessions, usersRelations as authUsersRelations, rolesRelations, userRolesRelations, sessionsRelations } from './schema/auth.js';
+export * from './schema/auth.ts';
+import { users, roles, userRoles, sessions, usersRelations as authUsersRelations, rolesRelations, userRolesRelations, sessionsRelations } from './schema/auth.ts';
+// Import AI schema
+export * from './schema/ai.ts';
+// Import media schema
+export * from './schema/media.ts';
+// Import API schema
+export * from './schema/api.ts';
+// Import templates schema
+export * from './schema/templates.ts';
+// Import video schema
+export * from './schema/video.ts';
+// Import trends schema
+export * from './schema/trends.ts';
+// Import settings schema
+export * from './schema/settings.ts';
 // Workflow table with JSON columns for nodes/edges
 export const workflows = pgTable('workflows', {
     id: serial('id').primaryKey(),

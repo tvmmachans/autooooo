@@ -1,6 +1,5 @@
 import React from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface TooltipProps {
   content: string;

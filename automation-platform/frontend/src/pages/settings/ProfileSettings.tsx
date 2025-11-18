@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { SettingsSection } from '../../components/settings/SettingsSection';
@@ -8,7 +8,6 @@ import { FileUpload } from '../../components/settings/FileUpload';
 import { Toggle } from '../../components/settings/Toggle';
 import { Button } from '../../components/ui/Button';
 import { User, Mail, Bell, Lock } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
@@ -30,10 +29,6 @@ export const ProfileSettings: React.FC = () => {
       });
       return res.data;
     },
-    onSuccess: (data) => {
-      setName(data.user.name);
-      setEmail(data.user.email);
-    },
   });
 
   const { data: settingsData } = useQuery({
@@ -46,6 +41,13 @@ export const ProfileSettings: React.FC = () => {
       return res.data;
     },
   });
+
+  useEffect(() => {
+    if (userData?.user) {
+      setName(userData.user.name);
+      setEmail(userData.user.email);
+    }
+  }, [userData]);
 
   const updateProfileMutation = useMutation({
     mutationFn: async (data: any) => {

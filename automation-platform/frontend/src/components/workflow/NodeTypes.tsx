@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Handle, Position, type NodeProps } from 'reactflow';
-import type { WorkflowNode, NodeType } from './types.js';
+import type { WorkflowNode } from './types.js';
+import { NodeType } from './types.js';
 import { isActionNode, isConditionNode, isStartNode, isEndNode } from './types.js';
 
 // Base node component props

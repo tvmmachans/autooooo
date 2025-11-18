@@ -4,12 +4,16 @@ import { eq, and, or, sql, desc, asc, inArray, like, gte, lte } from 'drizzle-or
 import * as schema from './schema.js';
 // Database connection configuration with pooling
 const connectionString = process.env.DATABASE_URL;
+// Check if connecting to Supabase (connection string contains 'supabase.co')
+const isSupabase = connectionString.includes('supabase.co');
 // Connection pooling configuration
 const client = postgres(connectionString, {
     prepare: false,
     max: parseInt(process.env.DB_MAX_CONNECTIONS || '10'), // Maximum pool size
     idle_timeout: parseInt(process.env.DB_IDLE_TIMEOUT || '20'), // Idle timeout in seconds
     connect_timeout: parseInt(process.env.DB_CONNECT_TIMEOUT || '10'), // Connection timeout in seconds
+    // Supabase requires SSL connections
+    ssl: isSupabase ? { rejectUnauthorized: false } : undefined,
     onnotice: () => { }, // Ignore notices
 });
 // Create the database instance

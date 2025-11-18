@@ -2,17 +2,17 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { AINodeConfig } from '../components/AI/AINodeConfig';
+import { AINodeConfig, type AIConfig } from '../components/AI/AINodeConfig';
 import { ContentPreview } from '../components/AI/ContentPreview';
 import { VoiceConfig } from '../components/AI/VoiceConfig';
 import { TrendSelector } from '../components/AI/TrendSelector';
 import { Sparkles } from 'lucide-react';
 
 export const AIStudio: React.FC = () => {
-  const [config, setConfig] = React.useState({
-    model: 'auto' as const,
+  const [config, setConfig] = React.useState<AIConfig>({
+    model: 'auto',
     language: 'malayalam',
-    generationType: 'reel_script' as const,
+    generationType: 'reel_script',
   });
 
   const [content, setContent] = React.useState('');
@@ -51,7 +51,10 @@ export const AIStudio: React.FC = () => {
                 Generate
               </Button>
             </div>
-            <AINodeConfig config={config} onChange={setConfig} />
+            <AINodeConfig
+              config={config}
+              onChange={(newConfig) => setConfig(newConfig)}
+            />
           </Card>
 
           <Card glass>

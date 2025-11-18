@@ -31,12 +31,6 @@ export const Toggle: React.FC<ToggleProps> = ({
     lg: 'w-5 h-5',
   };
 
-  const translateSizes = {
-    sm: 'translate-x-4',
-    md: 'translate-x-5',
-    lg: 'translate-x-7',
-  };
-
   return (
     <div className="flex items-start gap-3">
       <button

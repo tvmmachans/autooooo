@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Check, X, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
@@ -18,7 +17,6 @@ interface IntegrationCardProps {
 }
 
 export const IntegrationCard: React.FC<IntegrationCardProps> = ({
-  platform,
   name,
   icon,
   description,

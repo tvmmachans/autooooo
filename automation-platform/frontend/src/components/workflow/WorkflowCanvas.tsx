@@ -31,7 +31,7 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   onNodesChange,
   onEdgesChange,
 }) => {
-  const [nodes, setNodes, onNodesChangeInternal] = useNodesState(initialNodes);
+  const [nodes, , onNodesChangeInternal] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChangeInternal] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
@@ -70,7 +70,7 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         fitView
         className="bg-gray-50 dark:bg-gray-900"
       >
-        <Background variant="dots" gap={12} size={1} />
+        <Background gap={12} size={1} />
         <Controls />
         <MiniMap
           nodeColor={(node) => {

@@ -5,8 +5,7 @@ import { SettingsSection } from '../../components/settings/SettingsSection';
 import { SettingItem } from '../../components/settings/SettingItem';
 import { Input } from '../../components/settings/Input';
 import { Button } from '../../components/ui/Button';
-import { Toggle } from '../../components/settings/Toggle';
-import { Shield, Lock, Eye, EyeOff, QrCode, Copy, Check } from 'lucide-react';
+import { Shield, Lock, QrCode, Copy, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';

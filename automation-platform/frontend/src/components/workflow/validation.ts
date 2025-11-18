@@ -1,14 +1,9 @@
 import { z } from 'zod';
-import type { WorkflowNode, Edge } from './types.js';
+import type { WorkflowNode } from './types.js';
 import { NodeType } from './types.js';
-import type { Workflow, Node, Edge as WorkflowEdge } from '../types/database.js';
-import { WorkflowSchema, NodeSchema, EdgeSchema } from '../types/database.js';
-import {
-  validateNodeConfig,
-  validateConnection,
-  CONNECTION_RULES,
-  WorkflowNodeSchema
-} from './types.js';
+import type { Workflow, Node, Edge as WorkflowEdge } from '../../types/database';
+import { WorkflowSchema, NodeSchema, EdgeSchema } from '../../types/database';
+import { validateNodeConfig, validateConnection, WorkflowNodeSchema } from './types.js';
 
 // Enhanced workflow validation with Drizzle schema integration
 export interface ValidationResult {
@@ -40,7 +35,7 @@ export const validateWorkflowSchema = (workflow: Partial<Workflow>): ValidationR
   // Validate workflow structure
   const workflowResult = WorkflowSchema.safeParse(workflow);
   if (!workflowResult.success) {
-    workflowResult.error.errors.forEach(error => {
+    workflowResult.error.issues.forEach((error: z.ZodIssue) => {
       errors.push({
         type: 'schema',
         message: `Workflow ${error.path.join('.')}: ${error.message}`,
@@ -51,10 +46,10 @@ export const validateWorkflowSchema = (workflow: Partial<Workflow>): ValidationR
 
   // Validate nodes array
   if (workflow.nodes) {
-    workflow.nodes.forEach((node, index) => {
+    workflow.nodes.forEach((node: any, index: number) => {
       const nodeResult = NodeSchema.safeParse(node);
       if (!nodeResult.success) {
-        nodeResult.error.errors.forEach(error => {
+        nodeResult.error.issues.forEach((error: z.ZodIssue) => {
           errors.push({
             type: 'node',
             nodeId: node.id,
@@ -68,10 +63,10 @@ export const validateWorkflowSchema = (workflow: Partial<Workflow>): ValidationR
 
   // Validate edges array
   if (workflow.edges) {
-    workflow.edges.forEach((edge, index) => {
+    workflow.edges.forEach((edge: any, index: number) => {
       const edgeResult = EdgeSchema.safeParse(edge);
       if (!edgeResult.success) {
-        edgeResult.error.errors.forEach(error => {
+        edgeResult.error.issues.forEach((error: z.ZodIssue) => {
           errors.push({
             type: 'connection',
             edgeId: edge.id,
@@ -98,7 +93,7 @@ export const validateWorkflowNode = (node: WorkflowNode): ValidationResult => {
   // Validate node structure against WorkflowNodeSchema
   const nodeResult = WorkflowNodeSchema.safeParse(node);
   if (!nodeResult.success) {
-    nodeResult.error.errors.forEach(error => {
+    nodeResult.error.issues.forEach((error: z.ZodIssue) => {
       errors.push({
         type: 'node',
         nodeId: node.id,
@@ -110,7 +105,7 @@ export const validateWorkflowNode = (node: WorkflowNode): ValidationResult => {
 
   // Validate node-specific configuration
   const configErrors = validateNodeConfig(node);
-  configErrors.forEach(error => {
+  configErrors.forEach((error: string) => {
     errors.push({
       type: 'node',
       nodeId: node.id,
@@ -166,7 +161,7 @@ export const validateWorkflowNode = (node: WorkflowNode): ValidationResult => {
 // Validate connections between nodes with type safety
 export const validateWorkflowConnections = (
   nodes: WorkflowNode[],
-  edges: Edge[]
+  edges: WorkflowEdge[]
 ): ValidationResult => {
   const errors: ValidationError[] = [];
   const warnings: ValidationWarning[] = [];
@@ -285,7 +280,7 @@ export const validateCompleteWorkflow = (
     });
   } else {
     // Check for start node
-    const hasStartNode = workflow.nodes.some(node => node.type === 'start');
+    const hasStartNode = workflow.nodes.some((node: any) => node.type === 'start');
     if (!hasStartNode) {
       allErrors.push({
         type: 'workflow',
@@ -294,7 +289,7 @@ export const validateCompleteWorkflow = (
     }
 
     // Check for end node
-    const hasEndNode = workflow.nodes.some(node => node.type === 'end');
+    const hasEndNode = workflow.nodes.some((node: any) => node.type === 'end');
     if (!hasEndNode) {
       allErrors.push({
         type: 'workflow',
@@ -311,7 +306,7 @@ export const validateCompleteWorkflow = (
 };
 
 // Helper function to detect cycles in workflow
-const detectCycle = (nodes: WorkflowNode[], edges: Edge[]): boolean => {
+const detectCycle = (nodes: WorkflowNode[], edges: WorkflowEdge[]): boolean => {
   const adjList = new Map<string, string[]>();
   const visited = new Set<string>();
   const recStack = new Set<string>();

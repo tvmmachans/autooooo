@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-interface AIConfig {
+export interface AIConfig {
   model: 'auto' | 'sarvam' | 'groq' | 'gemini' | 'deepseek';
   language: string;
   generationType: 'reel_script' | 'caption' | 'blog' | 'translation' | 'general';

@@ -21,15 +21,21 @@ app.get('/health', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/workflows', workflowRoutes);
+// Import additional routes
+import mediaRoutes from './routes/mediaRoutes.js';
+import apiRoutes from './routes/apiRoutes.js';
+import settingsRoutes from './routes/settingsRoutes.js';
+app.use('/api/media', mediaRoutes);
+app.use('/api/api', apiRoutes);
+app.use('/api/settings', settingsRoutes);
+// Error handler (must be last)
+import { errorHandler } from './middleware/errorHandler.js';
+app.use(errorHandler);
 // 404 handler
 app.use('*', (req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
-// Error handler
-app.use((err, req, res, next) => {
-    console.error('Error:', err);
-    res.status(500).json({ error: 'Internal server error' });
-});
+// Error handler is now imported above
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

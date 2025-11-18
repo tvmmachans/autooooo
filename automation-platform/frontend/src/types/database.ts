@@ -162,13 +162,13 @@ export const NodeSchema = z.object({
     x: z.number(),
     y: z.number(),
   }),
-  data: z.record(z.any()),
+  data: z.record(z.string(), z.any()),
   width: z.number().optional(),
   height: z.number().optional(),
   selected: z.boolean().optional(),
   dragging: z.boolean().optional(),
   label: z.string().optional(),
-  style: z.record(z.any()).optional(),
+  style: z.record(z.string(), z.any()).optional(),
 });
 
 export const EdgeSchema = z.object({
@@ -179,8 +179,8 @@ export const EdgeSchema = z.object({
   targetHandle: z.string().optional(),
   type: z.string().optional(),
   animated: z.boolean().optional(),
-  style: z.record(z.any()).optional(),
-  data: z.record(z.any()).optional(),
+  style: z.record(z.string(), z.any()).optional(),
+  data: z.record(z.string(), z.any()).optional(),
   label: z.string().optional(),
 });
 
@@ -203,14 +203,14 @@ export const ExecutionSchema = z.object({
   startedAt: z.date().nullable(),
   completedAt: z.date().nullable(),
   error: z.string().nullable(),
-  inputData: z.record(z.any()).nullable(),
-  outputData: z.record(z.any()).nullable(),
+  inputData: z.record(z.string(), z.any()).nullable(),
+  outputData: z.record(z.string(), z.any()).nullable(),
   progress: z.object({
     currentNode: z.string().optional(),
     completedNodes: z.array(z.string()),
     totalNodes: z.number(),
     percentage: z.number(),
-    nodeProgress: z.record(z.object({
+    nodeProgress: z.record(z.string(), z.object({
       status: z.string(),
       startedAt: z.string().optional(),
       completedAt: z.string().optional(),

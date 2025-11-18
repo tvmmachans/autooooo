@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { Workflow, Execution, Node, Edge, ExecutionInput, ExecutionOutput } from '../types/database.js';
+import { Workflow, Execution } from '../types/database.js';
 
 // Store state interface
 interface WorkflowState {

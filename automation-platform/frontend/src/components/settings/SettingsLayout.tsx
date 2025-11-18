@@ -31,10 +31,6 @@ export const SettingsLayout: React.FC = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const currentSection = settingsSections.find(
-    (section) => location.pathname === section.path || location.pathname.startsWith(section.path + '/')
-  ) || settingsSections[0];
-
   return (
     <div className="min-h-screen p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
