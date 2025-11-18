@@ -5,9 +5,10 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "nodemon",
+    "dev": "tsx src/index.ts",
     "build": "tsc",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit",
     "migrate": "tsx node_modules/drizzle-kit/bin.cjs generate",
     "db:generate": "tsx node_modules/drizzle-kit/bin.cjs generate",
     "db:push": "tsx node_modules/drizzle-kit/bin.cjs push",
