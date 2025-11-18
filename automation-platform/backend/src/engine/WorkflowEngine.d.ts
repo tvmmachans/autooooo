@@ -11,6 +11,7 @@ interface ExecutableNode {
 export declare class WorkflowEngine {
     private nodeRegistry;
     constructor();
+    private registerAINodes;
     registerNode(nodeType: string, node: ExecutableNode): void;
     executeWorkflow(workflowId: number, input: ExecutionInput): Promise<ExecutionOutput>;
     private executeWorkflowNodes;

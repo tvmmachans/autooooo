@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Node, Edge } from '../../types/database.js';
+import type { Node, Edge } from '../../types/database.js';
 export declare enum NodeType {
     START = "start",
     ACTION = "action",
@@ -75,13 +75,13 @@ export declare const ActionNodeConfigSchema: z.ZodObject<{
     httpConfig: z.ZodOptional<z.ZodObject<{
         method: z.ZodEnum<{
             GET: "GET";
+            DELETE: "DELETE";
             POST: "POST";
             PUT: "PUT";
-            DELETE: "DELETE";
             PATCH: "PATCH";
         }>;
         url: z.ZodString;
-        headers: z.ZodOptional<z.ZodRecord<z.ZodString, z.core.SomeType>>;
+        headers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
         body: z.ZodOptional<z.ZodAny>;
         timeout: z.ZodOptional<z.ZodNumber>;
     }, z.core.$strip>>;
@@ -146,7 +146,7 @@ export declare const ConditionNodeConfigSchema: z.ZodObject<{
     }>;
 }, z.core.$strip>;
 export declare const StartNodeConfigSchema: z.ZodObject<{
-    variables: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
+    variables: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
     trigger: z.ZodOptional<z.ZodEnum<{
         manual: "manual";
         webhook: "webhook";
@@ -154,7 +154,7 @@ export declare const StartNodeConfigSchema: z.ZodObject<{
     }>>;
 }, z.core.$strip>;
 export declare const EndNodeConfigSchema: z.ZodObject<{
-    outputMapping: z.ZodOptional<z.ZodRecord<z.ZodString, z.core.SomeType>>;
+    outputMapping: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     successMessage: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const WorkflowNodeSchema: z.ZodObject<{
@@ -164,7 +164,7 @@ export declare const WorkflowNodeSchema: z.ZodObject<{
         x: z.ZodNumber;
         y: z.ZodNumber;
     }, z.core.$strip>;
-    data: z.ZodRecord<z.ZodAny, z.core.SomeType>;
+    data: z.ZodRecord<z.ZodString, z.ZodAny>;
     config: z.ZodUnion<readonly [z.ZodObject<{
         actionType: z.ZodEnum<{
             log: "log";
@@ -175,13 +175,13 @@ export declare const WorkflowNodeSchema: z.ZodObject<{
         httpConfig: z.ZodOptional<z.ZodObject<{
             method: z.ZodEnum<{
                 GET: "GET";
+                DELETE: "DELETE";
                 POST: "POST";
                 PUT: "PUT";
-                DELETE: "DELETE";
                 PATCH: "PATCH";
             }>;
             url: z.ZodString;
-            headers: z.ZodOptional<z.ZodRecord<z.ZodString, z.core.SomeType>>;
+            headers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
             body: z.ZodOptional<z.ZodAny>;
             timeout: z.ZodOptional<z.ZodNumber>;
         }, z.core.$strip>>;
@@ -225,14 +225,14 @@ export declare const WorkflowNodeSchema: z.ZodObject<{
             OR: "OR";
         }>;
     }, z.core.$strip>, z.ZodObject<{
-        variables: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
+        variables: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
         trigger: z.ZodOptional<z.ZodEnum<{
             manual: "manual";
             webhook: "webhook";
             schedule: "schedule";
         }>>;
     }, z.core.$strip>, z.ZodObject<{
-        outputMapping: z.ZodOptional<z.ZodRecord<z.ZodString, z.core.SomeType>>;
+        outputMapping: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
         successMessage: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>]>;
     width: z.ZodOptional<z.ZodNumber>;
@@ -240,7 +240,7 @@ export declare const WorkflowNodeSchema: z.ZodObject<{
     selected: z.ZodOptional<z.ZodBoolean>;
     dragging: z.ZodOptional<z.ZodBoolean>;
     label: z.ZodOptional<z.ZodString>;
-    style: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
+    style: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
     validationErrors: z.ZodOptional<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>;
 export declare const isActionNode: (node: WorkflowNode) => node is WorkflowNode & {

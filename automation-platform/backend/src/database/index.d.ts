@@ -13,8 +13,8 @@ export declare class DatabaseUtils {
         email: string;
         password: string;
         name: string;
-        role: string;
         isActive: boolean;
+        emailVerified: boolean;
         createdAt: Date;
         updatedAt: Date;
     }[]>;
@@ -23,8 +23,8 @@ export declare class DatabaseUtils {
         email: string;
         password: string;
         name: string;
-        role: string;
         isActive: boolean;
+        emailVerified: boolean;
         createdAt: Date;
         updatedAt: Date;
     }[]>;
@@ -33,8 +33,8 @@ export declare class DatabaseUtils {
         email: string;
         password: string;
         name: string;
-        role: string;
         isActive: boolean;
+        emailVerified: boolean;
         createdAt: Date;
         updatedAt: Date;
     }[]>;
@@ -453,6 +453,6 @@ export declare class DatabaseUtils {
     }>;
 }
 export declare const dbUtils: DatabaseUtils;
-export declare function withTransaction<T>(callback: (tx: Database) => Promise<T>): Promise<T>;
+export declare function withTransaction<T>(callback: (tx: any) => Promise<T>): Promise<T>;
 export declare function checkDatabaseConnection(): Promise<boolean>;
 //# sourceMappingURL=index.d.ts.map

@@ -11,6 +11,38 @@ export class WorkflowEngine {
         this.registerNode('action', createNodeAdapter('action'));
         this.registerNode('condition', createNodeAdapter('condition'));
         this.registerNode('end', createNodeAdapter('end'));
+        // Register AI nodes (lazy load to avoid circular dependencies)
+        this.registerAINodes();
+    }
+    registerAINodes() {
+        // Use dynamic imports to avoid circular dependencies
+        Promise.all([
+            import('./nodes/AIContentNode.js'),
+            import('./nodes/TrendContentNode.js'),
+            import('./nodes/AIReelScriptNode.js'),
+            import('./nodes/ContentTranslateNode.js'),
+            import('./nodes/AITTSNode.js'),
+            import('./nodes/AIVideoNode.js'),
+            import('./nodes/PlatformUploadNode.js'),
+            import('./nodes/ThumbnailAINode.js'),
+            import('./nodes/LiveTrendFinderNode.js'),
+            import('./nodes/TrendAnalyzerNode.js'),
+            import('./nodes/CompetitorTrendNode.js'),
+        ]).then(([AIContent, TrendContent, AIReelScript, ContentTranslate, AITTS, AIVideo, PlatformUpload, ThumbnailAI, LiveTrendFinder, TrendAnalyzer, CompetitorTrend]) => {
+            this.registerNode('ai_content', new AIContent.AIContentNode());
+            this.registerNode('trend_content', new TrendContent.TrendContentNode());
+            this.registerNode('ai_reel_script', new AIReelScript.AIReelScriptNode());
+            this.registerNode('content_translate', new ContentTranslate.ContentTranslateNode());
+            this.registerNode('ai_tts', new AITTS.AITTSNode());
+            this.registerNode('ai_video', new AIVideo.AIVideoNode());
+            this.registerNode('platform_upload', new PlatformUpload.PlatformUploadNode());
+            this.registerNode('thumbnail_ai', new ThumbnailAI.ThumbnailAINode());
+            this.registerNode('live_trend_finder', new LiveTrendFinder.LiveTrendFinderNode());
+            this.registerNode('trend_analyzer', new TrendAnalyzer.TrendAnalyzerNode());
+            this.registerNode('competitor_trend', new CompetitorTrend.CompetitorTrendNode());
+        }).catch(err => {
+            console.warn('Failed to register AI nodes:', err);
+        });
     }
     // Register a node type for execution
     registerNode(nodeType, node) {

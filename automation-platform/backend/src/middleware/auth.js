@@ -17,7 +17,6 @@ export const authenticate = async (req, res, next) => {
             .select({
             id: users.id,
             email: users.email,
-            role: users.role,
             name: users.name,
             isActive: users.isActive,
         })
@@ -34,7 +33,6 @@ export const authenticate = async (req, res, next) => {
         req.user = {
             id: user.id,
             email: user.email,
-            role: user.role,
             name: user.name,
         };
         next();
@@ -56,7 +54,7 @@ export const authorize = (...roles) => {
         if (!req.user) {
             return res.status(401).json({ error: 'Authentication required' });
         }
-        if (!roles.includes(req.user.role)) {
+        if (!roles.includes(req.user.role || '')) {
             return res.status(403).json({ error: 'Insufficient permissions' });
         }
         next();
@@ -77,7 +75,6 @@ export const optionalAuth = async (req, res, next) => {
             .select({
             id: users.id,
             email: users.email,
-            role: users.role,
             name: users.name,
             isActive: users.isActive,
         })
@@ -88,7 +85,6 @@ export const optionalAuth = async (req, res, next) => {
             req.user = {
                 id: user.id,
                 email: user.email,
-                role: user.role,
                 name: user.name,
             };
         }

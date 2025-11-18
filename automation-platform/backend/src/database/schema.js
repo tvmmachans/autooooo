@@ -1,21 +1,23 @@
 import { pgTable, serial, text, timestamp, jsonb, integer, boolean, uuid, index, uniqueIndex, check } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { relations } from 'drizzle-orm';
-// User table with auth fields
-export const users = pgTable('users', {
-    id: serial('id').primaryKey(),
-    email: text('email').notNull().unique(),
-    password: text('password').notNull(),
-    name: text('name').notNull(),
-    role: text('role').default('user').notNull(),
-    isActive: boolean('is_active').default(true).notNull(),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at').defaultNow().notNull(),
-}, (table) => ({
-    emailIdx: uniqueIndex('users_email_idx').on(table.email),
-    roleIdx: index('users_role_idx').on(table.role),
-    activeIdx: index('users_active_idx').on(table.isActive),
-}));
+// Import auth schema
+export * from './schema/auth.ts';
+import { users, roles, userRoles, sessions, usersRelations as authUsersRelations, rolesRelations, userRolesRelations, sessionsRelations } from './schema/auth.ts';
+// Import AI schema
+export * from './schema/ai.ts';
+// Import media schema
+export * from './schema/media.ts';
+// Import API schema
+export * from './schema/api.ts';
+// Import templates schema
+export * from './schema/templates.ts';
+// Import video schema
+export * from './schema/video.ts';
+// Import trends schema
+export * from './schema/trends.ts';
+// Import settings schema
+export * from './schema/settings.ts';
 // Workflow table with JSON columns for nodes/edges
 export const workflows = pgTable('workflows', {
     id: serial('id').primaryKey(),

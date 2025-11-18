@@ -1,5 +1,5 @@
 import { defineConfig } from 'drizzle-kit';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 // Load environment variables
 dotenv.config();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -26,5 +26,7 @@ export default defineConfig({
     }),
     // Custom breakpoints for large migrations
     breakpoints: true,
+    // TypeScript configuration
+    tsconfig: './tsconfig.json',
 });
 //# sourceMappingURL=drizzle.config.js.map

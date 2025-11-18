@@ -147,13 +147,13 @@ export declare const NodeSchema: z.ZodObject<{
         x: z.ZodNumber;
         y: z.ZodNumber;
     }, z.core.$strip>;
-    data: z.ZodRecord<z.ZodAny, z.core.SomeType>;
+    data: z.ZodRecord<z.ZodString, z.ZodAny>;
     width: z.ZodOptional<z.ZodNumber>;
     height: z.ZodOptional<z.ZodNumber>;
     selected: z.ZodOptional<z.ZodBoolean>;
     dragging: z.ZodOptional<z.ZodBoolean>;
     label: z.ZodOptional<z.ZodString>;
-    style: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
+    style: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
 }, z.core.$strip>;
 export declare const EdgeSchema: z.ZodObject<{
     id: z.ZodString;
@@ -163,8 +163,8 @@ export declare const EdgeSchema: z.ZodObject<{
     targetHandle: z.ZodOptional<z.ZodString>;
     type: z.ZodOptional<z.ZodString>;
     animated: z.ZodOptional<z.ZodBoolean>;
-    style: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
-    data: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
+    style: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    data: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
     label: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const WorkflowSchema: z.ZodObject<{
@@ -179,13 +179,13 @@ export declare const WorkflowSchema: z.ZodObject<{
             x: z.ZodNumber;
             y: z.ZodNumber;
         }, z.core.$strip>;
-        data: z.ZodRecord<z.ZodAny, z.core.SomeType>;
+        data: z.ZodRecord<z.ZodString, z.ZodAny>;
         width: z.ZodOptional<z.ZodNumber>;
         height: z.ZodOptional<z.ZodNumber>;
         selected: z.ZodOptional<z.ZodBoolean>;
         dragging: z.ZodOptional<z.ZodBoolean>;
         label: z.ZodOptional<z.ZodString>;
-        style: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
+        style: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
     }, z.core.$strip>>;
     edges: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -195,8 +195,8 @@ export declare const WorkflowSchema: z.ZodObject<{
         targetHandle: z.ZodOptional<z.ZodString>;
         type: z.ZodOptional<z.ZodString>;
         animated: z.ZodOptional<z.ZodBoolean>;
-        style: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
-        data: z.ZodOptional<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
+        style: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+        data: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
         label: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>>;
     isActive: z.ZodBoolean;
@@ -215,14 +215,18 @@ export declare const ExecutionSchema: z.ZodObject<{
     startedAt: z.ZodNullable<z.ZodDate>;
     completedAt: z.ZodNullable<z.ZodDate>;
     error: z.ZodNullable<z.ZodString>;
-    inputData: z.ZodNullable<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
-    outputData: z.ZodNullable<z.ZodRecord<z.ZodAny, z.core.SomeType>>;
+    inputData: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    outputData: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodAny>>;
     progress: z.ZodNullable<z.ZodObject<{
         currentNode: z.ZodOptional<z.ZodString>;
         completedNodes: z.ZodArray<z.ZodString>;
         totalNodes: z.ZodNumber;
         percentage: z.ZodNumber;
-        nodeProgress: z.ZodRecord<z.core.$ZodRecordKey, z.core.SomeType>;
+        nodeProgress: z.ZodRecord<z.ZodString, z.ZodObject<{
+            status: z.ZodString;
+            startedAt: z.ZodOptional<z.ZodString>;
+            completedAt: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>>;
     createdAt: z.ZodDate;
 }, z.core.$strip>;

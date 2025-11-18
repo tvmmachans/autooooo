@@ -1,0 +1,95 @@
+import axios from 'axios';
+import { db } from '../../database/index.js';
+import { aiUsageLogs } from '../../database/schema/ai.js';
+export class SarvamService {
+    apiKey;
+    baseUrl = 'https://api.sarvam.ai/v1';
+    constructor() {
+        this.apiKey = process.env.SARVAM_API_KEY || '';
+    }
+    async generateContent(request, userId) {
+        const startTime = Date.now();
+        let inputTokens = 0;
+        let outputTokens = 0;
+        let success = true;
+        let error;
+        try {
+            const response = await axios.post(`${this.baseUrl}/chat/completions`, {
+                model: 'sarvam-ai/ai4bharat-indic-llama3-8b-instruct',
+                messages: [
+                    {
+                        role: 'user',
+                        content: request.prompt,
+                    },
+                ],
+                language: request.language || 'malayalam',
+                max_tokens: request.maxTokens || 1000,
+                temperature: request.temperature || 0.7,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${this.apiKey}`,
+                    'Content-Type': 'application/json',
+                },
+                timeout: 30000,
+            });
+            const generatedText = response.data.choices?.[0]?.message?.content || '';
+            inputTokens = response.data.usage?.prompt_tokens || 0;
+            outputTokens = response.data.usage?.completion_tokens || 0;
+            // Log usage
+            if (userId) {
+                await this.logUsage({
+                    userId,
+                    model: 'sarvam',
+                    provider: 'sarvam',
+                    language: request.language || 'malayalam',
+                    generationType: 'content',
+                    inputTokens,
+                    outputTokens,
+                    cost: 0,
+                    duration: Date.now() - startTime,
+                    success: true,
+                });
+            }
+            return {
+                text: generatedText,
+                tokens: {
+                    input: inputTokens,
+                    output: outputTokens,
+                },
+            };
+        }
+        catch (err) {
+            success = false;
+            error = err.response?.data?.error?.message || err.message || 'Unknown error';
+            if (userId) {
+                await this.logUsage({
+                    userId,
+                    model: 'sarvam',
+                    provider: 'sarvam',
+                    language: request.language || 'malayalam',
+                    generationType: 'content',
+                    inputTokens,
+                    outputTokens,
+                    cost: 0,
+                    duration: Date.now() - startTime,
+                    success: false,
+                    error,
+                });
+            }
+            throw new Error(`Sarvam AI error: ${error}`);
+        }
+    }
+    async logUsage(data) {
+        try {
+            await db.insert(aiUsageLogs).values(data);
+        }
+        catch (err) {
+            console.error('Failed to log AI usage:', err);
+        }
+    }
+    // Check if service is available
+    isAvailable() {
+        return !!this.apiKey;
+    }
+}
+//# sourceMappingURL=SarvamService.js.map

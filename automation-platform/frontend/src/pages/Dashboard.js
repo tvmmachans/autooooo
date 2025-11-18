@@ -1,0 +1,18 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Card } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { Workflow, TrendingUp, Video, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+const stats = [
+    { label: 'Active Workflows', value: 12, icon: Workflow, color: 'from-blue-500 to-cyan-600' },
+    { label: 'Trends Found', value: 48, icon: TrendingUp, color: 'from-purple-500 to-pink-600' },
+    { label: 'Videos Created', value: 23, icon: Video, color: 'from-orange-500 to-amber-600' },
+    { label: 'AI Generations', value: 156, icon: Sparkles, color: 'from-green-500 to-emerald-600' },
+];
+export const Dashboard = () => {
+    const navigate = useNavigate();
+    return (_jsxs("div", { className: "p-8 space-y-8", children: [_jsxs(motion.div, { initial: { opacity: 0, y: -20 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, children: [_jsx("h1", { className: "text-4xl font-bold mb-2 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent", children: "Dashboard" }), _jsx("p", { className: "text-gray-600 dark:text-gray-400", children: "Welcome back! Here's what's happening." })] }), _jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6", children: stats.map((stat, index) => (_jsx(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: index * 0.1, duration: 0.5 }, children: _jsx(Card, { glass: true, hover: true, children: _jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400 mb-1", children: stat.label }), _jsx(motion.p, { className: "text-3xl font-bold text-gray-900 dark:text-gray-100", initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { delay: index * 0.1 + 0.2 }, children: stat.value })] }), _jsx(motion.div, { className: `w-12 h-12 rounded-lg bg-gradient-to-r ${stat.color} flex items-center justify-center`, whileHover: { rotate: 360 }, transition: { duration: 0.5 }, children: _jsx(stat.icon, { className: "w-6 h-6 text-white" }) })] }) }) }, stat.label))) }), _jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: [_jsxs(Card, { glass: true, children: [_jsx("h2", { className: "text-xl font-semibold mb-4", children: "Quick Actions" }), _jsxs("div", { className: "space-y-3", children: [_jsx(Button, { className: "w-full", onClick: () => navigate('/workflows'), magnetic: true, children: "Create New Workflow" }), _jsx(Button, { variant: "secondary", className: "w-full", onClick: () => navigate('/ai-studio'), magnetic: true, children: "Open AI Studio" }), _jsx(Button, { variant: "ghost", className: "w-full", onClick: () => navigate('/trends'), magnetic: true, children: "Discover Trends" })] })] }), _jsxs(Card, { glass: true, children: [_jsx("h2", { className: "text-xl font-semibold mb-4", children: "Recent Activity" }), _jsx("div", { className: "space-y-3", children: [1, 2, 3].map((i) => (_jsxs(motion.div, { className: "flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50", initial: { opacity: 0, x: -20 }, animate: { opacity: 1, x: 0 }, transition: { delay: i * 0.1 }, children: [_jsx("div", { className: "w-2 h-2 rounded-full bg-blue-500" }), _jsxs("div", { className: "flex-1", children: [_jsx("p", { className: "text-sm font-medium", children: "Workflow executed successfully" }), _jsx("p", { className: "text-xs text-gray-500", children: "2 minutes ago" })] })] }, i))) })] })] })] }));
+};
+//# sourceMappingURL=Dashboard.js.map

@@ -1,0 +1,10 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import React from 'react';
+import { Check, X, ExternalLink } from 'lucide-react';
+import { Button } from '../ui/Button';
+import { Card } from '../ui/Card';
+import { cn } from '../../lib/utils';
+export const IntegrationCard = ({ name, icon, description, connected, onConnect, onDisconnect, username, color = 'blue', }) => {
+    return (_jsx(Card, { className: cn('p-4', connected && 'border-2 border-green-500'), children: _jsxs("div", { className: "flex items-start justify-between", children: [_jsxs("div", { className: "flex items-start gap-3 flex-1", children: [_jsx("div", { className: cn('w-12 h-12 rounded-lg flex items-center justify-center', `bg-${color}-100 dark:bg-${color}-900/30`), children: icon }), _jsxs("div", { className: "flex-1", children: [_jsxs("div", { className: "flex items-center gap-2", children: [_jsx("h3", { className: "font-semibold text-gray-900 dark:text-gray-100", children: name }), connected && (_jsxs("div", { className: "flex items-center gap-1 text-green-600 dark:text-green-400", children: [_jsx(Check, { className: "w-4 h-4" }), _jsx("span", { className: "text-xs font-medium", children: "Connected" })] }))] }), _jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400 mt-1", children: description }), connected && username && (_jsxs("p", { className: "text-xs text-gray-500 dark:text-gray-400 mt-1", children: ["Connected as: ", _jsx("span", { className: "font-medium", children: username })] }))] })] }), _jsx("div", { className: "flex items-center gap-2", children: connected ? (_jsx(_Fragment, { children: _jsxs(Button, { variant: "ghost", size: "sm", onClick: onDisconnect, children: [_jsx(X, { className: "w-4 h-4 mr-2" }), "Disconnect"] }) })) : (_jsxs(Button, { size: "sm", onClick: onConnect, children: [_jsx(ExternalLink, { className: "w-4 h-4 mr-2" }), "Connect"] })) })] }) }));
+};
+//# sourceMappingURL=IntegrationCard.js.map

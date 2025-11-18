@@ -1,11 +1,11 @@
 export declare class ExecutionService {
     executeWorkflow(workflowId: number, input: any, userId: number): Promise<{
-        executionId: number;
+        executionId: any;
         success: boolean;
         data: Record<string, any> | undefined;
         error: string | undefined;
     } | {
-        executionId: number;
+        executionId: any;
         success: boolean;
         error: string;
         data?: never;
@@ -225,7 +225,7 @@ export declare class ExecutionService {
         recentLogs: any;
     }[]>;
     cleanupOldExecutions(olderThanDays: number, userId: number): Promise<{
-        deletedCount: number;
+        deletedCount: any;
     }>;
 }
 export declare const executionService: ExecutionService;

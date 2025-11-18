@@ -184,7 +184,7 @@ export class ExecutionService {
     // Bulk operations for multiple executions
     async bulkUpdateExecutionStatus(executionIds, status) {
         return await db.update(executions)
-            .set({ status, updatedAt: new Date() })
+            .set({ status })
             .where(inArray(executions.id, executionIds))
             .returning();
     }

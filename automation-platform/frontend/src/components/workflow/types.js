@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { Node, Edge } from '../../types/database.js';
 // Node types for the workflow builder
 export var NodeType;
 (function (NodeType) {
@@ -133,7 +132,7 @@ export const ActionNodeConfigSchema = z.object({
     httpConfig: z.object({
         method: z.enum(['GET', 'POST', 'PUT', 'DELETE', 'PATCH']),
         url: z.string().url(),
-        headers: z.record(z.string()).optional(),
+        headers: z.record(z.string(), z.string()).optional(),
         body: z.any().optional(),
         timeout: z.number().positive().optional(),
     }).optional(),
@@ -162,11 +161,11 @@ export const ConditionNodeConfigSchema = z.object({
     logicOperator: z.enum(['AND', 'OR']),
 });
 export const StartNodeConfigSchema = z.object({
-    variables: z.record(z.any()).optional(),
+    variables: z.record(z.string(), z.any()).optional(),
     trigger: z.enum(['manual', 'webhook', 'schedule']).optional(),
 });
 export const EndNodeConfigSchema = z.object({
-    outputMapping: z.record(z.string()).optional(),
+    outputMapping: z.record(z.string(), z.string()).optional(),
     successMessage: z.string().optional(),
 });
 export const WorkflowNodeSchema = z.object({
@@ -176,7 +175,7 @@ export const WorkflowNodeSchema = z.object({
         x: z.number(),
         y: z.number(),
     }),
-    data: z.record(z.any()),
+    data: z.record(z.string(), z.any()),
     config: z.union([
         ActionNodeConfigSchema,
         ConditionNodeConfigSchema,
@@ -188,7 +187,7 @@ export const WorkflowNodeSchema = z.object({
     selected: z.boolean().optional(),
     dragging: z.boolean().optional(),
     label: z.string().optional(),
-    style: z.record(z.any()).optional(),
+    style: z.record(z.string(), z.any()).optional(),
     validationErrors: z.array(z.string()).optional(),
 });
 // Type guards

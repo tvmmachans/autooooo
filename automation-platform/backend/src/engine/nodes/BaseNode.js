@@ -77,8 +77,5 @@ export function createNode(nodeType, context, nodeId, nodeData) {
     }
 }
 // Import concrete node implementations
-import { StartNode } from './StartNode.js';
-import { ActionNode } from './ActionNode.js';
-import { ConditionNode } from './ConditionNode.js';
-import { EndNode } from './EndNode.js';
+// Moved to bottom to avoid circular dependency
 //# sourceMappingURL=BaseNode.js.map
