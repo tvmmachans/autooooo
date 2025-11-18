@@ -117,3 +117,7 @@ export function createNode(
 
 // Import concrete node implementations
 // Moved to bottom to avoid circular dependency
+import { StartNode } from './StartNode.js';
+import { ActionNode } from './ActionNode.js';
+import { ConditionNode } from './ConditionNode.js';
+import { EndNode } from './EndNode.js';

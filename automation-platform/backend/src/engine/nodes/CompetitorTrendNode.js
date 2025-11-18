@@ -1,5 +1,5 @@
 import { db } from '../../database/index.js';
-import { competitorTrends, NewCompetitorTrend } from '../../database/schema/trends.js';
+import { competitorTrends } from '../../database/schema/trends.js';
 import { eq, and, desc } from 'drizzle-orm';
 export class CompetitorTrendNode {
     async execute(context, input) {

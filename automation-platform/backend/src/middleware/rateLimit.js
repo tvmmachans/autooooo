@@ -1,5 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
-import Redis from 'ioredis';
+import { Redis } from 'ioredis';
 import { AppError } from '../utils/AppError.js';
 export class RateLimiter {
     redis;

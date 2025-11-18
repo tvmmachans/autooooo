@@ -1,6 +1,6 @@
 import { db } from '../database/index.js';
-import { templates, templateUsage, NewTemplate } from '../database/schema/templates.js';
-import { eq, and, or, like } from 'drizzle-orm';
+import { templates, templateUsage } from '../database/schema/templates.js';
+import { eq, and, or, like, sql } from 'drizzle-orm';
 export class TemplateService {
     async createTemplate(data) {
         const [template] = await db.insert(templates).values({
@@ -37,7 +37,7 @@ export class TemplateService {
     async useTemplate(templateId, userId, workflowId) {
         // Increment usage count
         await db.update(templates)
-            .set({ usageCount: templates.usageCount + 1 })
+            .set({ usageCount: sql `${templates.usageCount} + 1` })
             .where(eq(templates.id, templateId));
         // Record usage
         await db.insert(templateUsage).values({
@@ -70,8 +70,7 @@ export class TemplateService {
         // Recalculate average rating
         const ratings = await db.select()
             .from(templateUsage)
-            .where(and(eq(templateUsage.templateId, templateId), eq(templateUsage.rating, rating) // This should be != null
-        ));
+            .where(and(eq(templateUsage.templateId, templateId), sql `${templateUsage.rating} IS NOT NULL`));
         const avgRating = ratings.reduce((sum, r) => sum + (r.rating || 0), 0) / ratings.length;
         await db.update(templates)
             .set({

@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { NodeType } from './types.js';
 import { WorkflowSchema, NodeSchema, EdgeSchema } from '../../types/database';
 import { validateNodeConfig, validateConnection, WorkflowNodeSchema } from './types.js';

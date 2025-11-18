@@ -1,7 +1,6 @@
-import { db, dbUtils, withTransaction } from '../database/index.js';
-import { workflows, executions, users } from '../database/schema.js';
-import { eq, and, or, like, desc, asc, sql, inArray } from 'drizzle-orm';
-import { executionService } from '../services/ExecutionService.js';
+import { db, dbUtils } from '../database/index.js';
+import { workflows, executions } from '../database/schema.js';
+import { eq, and, or, like, desc, asc, sql } from 'drizzle-orm';
 // Type-safe workflow CRUD operations using Drizzle query builder
 export class WorkflowController {
     // Get all workflows for a user with optional filtering

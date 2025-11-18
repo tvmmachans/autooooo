@@ -1,5 +1,6 @@
 import { db } from '../database/index.js';
-import { apiKeys, NewAPIKey } from '../database/schema/api.js';
+import { apiKeys } from '../database/schema/api.js';
+import type { NewAPIKey } from '../database/schema/api.js';
 import { eq, and } from 'drizzle-orm';
 import crypto from 'crypto';
 

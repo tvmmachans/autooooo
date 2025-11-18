@@ -1,6 +1,6 @@
 import { db } from '../database/index.js';
 import { roles, userRoles, PERMISSIONS } from '../database/schema.js';
-import { eq, and, inArray } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 // Permission-based middleware
 export const requirePermission = (requiredPermission) => {
     return async (req, res, next) => {

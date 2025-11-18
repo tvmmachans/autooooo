@@ -1,9 +1,9 @@
-import { pgTable, serial, text, timestamp, jsonb, integer, boolean, uuid, index, uniqueIndex, check } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, jsonb, integer, boolean, index, check } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { relations } from 'drizzle-orm';
 // Import auth schema
 export * from './schema/auth.ts';
-import { users, roles, userRoles, sessions, usersRelations as authUsersRelations, rolesRelations, userRolesRelations, sessionsRelations } from './schema/auth.ts';
+import { users } from './schema/auth.ts';
 // Import AI schema
 export * from './schema/ai.ts';
 // Import media schema

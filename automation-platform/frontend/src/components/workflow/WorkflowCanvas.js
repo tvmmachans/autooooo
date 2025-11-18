@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useCallback } from 'react';
-import ReactFlow, { Background, Controls, MiniMap, Node, Edge, Connection, addEdge, useNodesState, useEdgesState, } from 'reactflow';
+import ReactFlow, { Background, Controls, MiniMap, addEdge, useNodesState, useEdgesState, } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { AnimatedNode } from './AnimatedNode';
 import { motion } from 'framer-motion';

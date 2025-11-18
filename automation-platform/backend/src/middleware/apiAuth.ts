@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { ApiKeyService } from '../services/ApiKeyService.js';
 import { AppError } from '../utils/AppError.js';
 

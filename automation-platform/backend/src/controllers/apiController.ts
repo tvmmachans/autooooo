@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { ApiKeyService } from '../services/ApiKeyService.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import { AppError } from '../utils/AppError.js';

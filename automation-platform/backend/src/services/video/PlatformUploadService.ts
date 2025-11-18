@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { db } from '../../database/index.js';
-import { platformUploads, NewPlatformUpload } from '../../database/schema/video.js';
+import { platformUploads } from '../../database/schema/video.js';
+import type { NewPlatformUpload } from '../../database/schema/video.js';
 import { eq } from 'drizzle-orm';
 import fs from 'fs/promises';
 

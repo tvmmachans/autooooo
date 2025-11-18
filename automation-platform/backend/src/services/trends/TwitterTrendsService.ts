@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { db } from '../../database/index.js';
-import { trendData, trendSources, NewTrendData } from '../../database/schema/trends.js';
+import { trendData, trendSources } from '../../database/schema/trends.js';
+import type { NewTrendData } from '../../database/schema/trends.js';
 import { eq, and } from 'drizzle-orm';
 
 export interface TwitterTrend {

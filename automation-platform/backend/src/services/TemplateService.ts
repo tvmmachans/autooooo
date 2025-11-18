@@ -1,6 +1,7 @@
 import { db } from '../database/index.js';
-import { templates, templateUsage, NewTemplate } from '../database/schema/templates.js';
-import { eq, and, or, like } from 'drizzle-orm';
+import { templates, templateUsage } from '../database/schema/templates.js';
+import type { NewTemplate } from '../database/schema/templates.js';
+import { eq, and, or, like, sql } from 'drizzle-orm';
 
 export class TemplateService {
   async createTemplate(data: {
@@ -63,7 +64,7 @@ export class TemplateService {
   async useTemplate(templateId: number, userId: number, workflowId?: number) {
     // Increment usage count
     await db.update(templates)
-      .set({ usageCount: templates.usageCount + 1 })
+      .set({ usageCount: sql`${templates.usageCount} + 1` })
       .where(eq(templates.id, templateId));
 
     // Record usage
@@ -107,7 +108,7 @@ export class TemplateService {
       .where(
         and(
           eq(templateUsage.templateId, templateId),
-          eq(templateUsage.rating, rating) // This should be != null
+          sql`${templateUsage.rating} IS NOT NULL`
         )
       );
 

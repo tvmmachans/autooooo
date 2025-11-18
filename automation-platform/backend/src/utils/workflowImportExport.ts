@@ -91,11 +91,11 @@ export class WorkflowImportExport {
 
     return {
       name: updateName ? `${workflow.name} (Imported)` : workflow.name,
-      description: workflow.description,
+      ...(workflow.description !== undefined && { description: workflow.description }),
       nodes: workflow.nodes,
       edges: workflow.edges,
-      variables: workflow.variables,
-      errors: errors.length > 0 ? errors : undefined,
+      ...(workflow.variables !== undefined && { variables: workflow.variables }),
+      ...(errors.length > 0 ? { errors } : {}),
     };
   }
 

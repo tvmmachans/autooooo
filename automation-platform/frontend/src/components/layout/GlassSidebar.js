@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Workflow, Sparkles, Video, TrendingUp, Settings, Menu, X } from 'lucide-react';

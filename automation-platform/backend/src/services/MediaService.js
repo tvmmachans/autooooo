@@ -1,5 +1,5 @@
 import { db } from '../database/index.js';
-import { mediaFiles, NewMediaFile } from '../database/schema/media.js';
+import { mediaFiles } from '../database/schema/media.js';
 import { eq, and } from 'drizzle-orm';
 import fs from 'fs/promises';
 import path from 'path';

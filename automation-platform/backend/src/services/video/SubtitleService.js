@@ -1,4 +1,3 @@
-import { db } from '../../database/index.js';
 import { AIContentService } from '../ai/AIContentService.js';
 export class SubtitleService {
     aiService;

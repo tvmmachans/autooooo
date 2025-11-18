@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { Workflow, Execution } from '../types/database.js';
 // Create the store
 export const useWorkflowStore = create()(subscribeWithSelector((set, get) => ({
     // Initial state

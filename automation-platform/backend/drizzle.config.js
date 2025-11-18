@@ -26,7 +26,5 @@ export default defineConfig({
     }),
     // Custom breakpoints for large migrations
     breakpoints: true,
-    // TypeScript configuration
-    tsconfig: './tsconfig.json',
 });
 //# sourceMappingURL=drizzle.config.js.map

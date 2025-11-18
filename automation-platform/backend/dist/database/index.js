@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import { eq, and, or, sql, desc, asc, inArray, like, gte, lte } from 'drizzle-orm';
+import { eq, and, or, sql, desc, asc, inArray, like, gte } from 'drizzle-orm';
 import * as schema from './schema.js';
 // Database connection configuration with pooling
 const connectionString = process.env.DATABASE_URL;

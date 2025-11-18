@@ -3,29 +3,29 @@ import { sql } from 'drizzle-orm';
 import { relations } from 'drizzle-orm';
 
 // Import auth schema
-export * from './schema/auth.ts';
-import { users, roles, userRoles, sessions, usersRelations as authUsersRelations, rolesRelations, userRolesRelations, sessionsRelations } from './schema/auth.ts';
+export * from './schema/auth.js';
+import { users, roles, userRoles, sessions, usersRelations as authUsersRelations, rolesRelations, userRolesRelations, sessionsRelations } from './schema/auth.js';
 
 // Import AI schema
-export * from './schema/ai.ts';
+export * from './schema/ai.js';
 
 // Import media schema
-export * from './schema/media.ts';
+export * from './schema/media.js';
 
 // Import API schema
-export * from './schema/api.ts';
+export { apiKeys, apiKeysRelations, apiUsageLogs, apiUsageLogsRelations, type APIKey, type NewAPIKey, type APIUsageLog, type NewAPIUsageLog } from './schema/api.js';
 
 // Import templates schema
-export * from './schema/templates.ts';
+export * from './schema/templates.js';
 
 // Import video schema
-export * from './schema/video.ts';
+export * from './schema/video.js';
 
 // Import trends schema
-export * from './schema/trends.ts';
+export * from './schema/trends.js';
 
 // Import settings schema
-export * from './schema/settings.ts';
+export * from './schema/settings.js';
 
 // Workflow table with JSON columns for nodes/edges
 export const workflows = pgTable('workflows', {

@@ -1,5 +1,6 @@
 import React from 'react';
-import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
+import Joyride, { STATUS } from 'react-joyride';
+import type { CallBackProps, Step } from 'react-joyride';
 import { useUIStore } from '../../store/uiStore';
 
 const steps: Step[] = [

@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { MediaService } from '../services/MediaService.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import { AppError } from '../utils/AppError.js';

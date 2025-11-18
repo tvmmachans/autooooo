@@ -199,7 +199,7 @@ export const integrationTokensRelations = relations(integrationTokens, ({ one })
 export const aiServiceConfigRelations = relations(aiServiceConfig, ({ one }) => ({
   user: one(users, {
     fields: [aiServiceConfig.userId],
-    references: [aiServiceConfig.id],
+    references: [users.id],
   }),
 }));
 

@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React from 'react';
 export const VideoPreview = ({ videoUrl, thumbnailUrl, title, duration, status, isLoading, }) => {
     if (isLoading || status === 'processing') {
         return (_jsx("div", { className: "p-8 border rounded-lg bg-gray-50 flex items-center justify-center", children: _jsxs("div", { className: "text-center", children: [_jsx("div", { className: "animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4" }), _jsx("p", { className: "text-gray-600", children: "Processing video..." })] }) }));

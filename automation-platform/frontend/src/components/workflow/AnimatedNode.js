@@ -1,6 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React from 'react';
-import { Handle, Position, NodeProps } from 'reactflow';
+import { Handle, Position } from 'reactflow';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 export const AnimatedNode = ({ data, selected }) => {

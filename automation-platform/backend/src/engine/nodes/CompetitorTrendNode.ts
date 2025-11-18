@@ -1,6 +1,7 @@
 import type { WorkflowExecutionContext } from '../../database/schema.js';
 import { db } from '../../database/index.js';
-import { competitorTrends, NewCompetitorTrend } from '../../database/schema/trends.js';
+import { competitorTrends } from '../../database/schema/trends.js';
+import type { NewCompetitorTrend } from '../../database/schema/trends.js';
 import { eq, and, desc } from 'drizzle-orm';
 
 export class CompetitorTrendNode {

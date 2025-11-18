@@ -1,5 +1,4 @@
 import { pgTable, serial, text, timestamp, jsonb, integer, boolean, index, uniqueIndex } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
 import { relations } from 'drizzle-orm';
 import { users } from './auth.js';
 // User settings table for personal preferences
@@ -140,7 +139,7 @@ export const integrationTokensRelations = relations(integrationTokens, ({ one })
 export const aiServiceConfigRelations = relations(aiServiceConfig, ({ one }) => ({
     user: one(users, {
         fields: [aiServiceConfig.userId],
-        references: [aiServiceConfig.id],
+        references: [users.id],
     }),
 }));
 export const auditLogsRelations = relations(auditLogs, ({ one }) => ({

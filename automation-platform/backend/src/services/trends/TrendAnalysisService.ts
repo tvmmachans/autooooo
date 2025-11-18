@@ -1,5 +1,6 @@
 import { db } from '../../database/index.js';
-import { trendData, trendHistory, NewTrendHistory } from '../../database/schema/trends.js';
+import { trendData, trendHistory } from '../../database/schema/trends.js';
+import type { NewTrendHistory } from '../../database/schema/trends.js';
 import { eq, and, gte, desc } from 'drizzle-orm';
 
 export interface TrendAnalysis {

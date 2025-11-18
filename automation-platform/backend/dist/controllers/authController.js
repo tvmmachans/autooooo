@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { db, withTransaction } from '../database/index.js';
-import { users, roles, userRoles, sessions, DEFAULT_ROLES, PERMISSIONS } from '../database/schema.js';
-import { eq, and, or, sql } from 'drizzle-orm';
+import { users, roles, userRoles, sessions } from '../database/schema.js';
+import { eq, and, sql } from 'drizzle-orm';
 import { randomBytes } from 'crypto';
 // JWT token generation
 const generateAccessToken = (userId) => {

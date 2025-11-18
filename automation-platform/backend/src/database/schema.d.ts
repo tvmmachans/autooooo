@@ -1,12 +1,12 @@
-export * from './schema/auth.ts';
-import { users } from './schema/auth.ts';
-export * from './schema/ai.ts';
-export * from './schema/media.ts';
-export * from './schema/api.ts';
-export * from './schema/templates.ts';
-export * from './schema/video.ts';
-export * from './schema/trends.ts';
-export * from './schema/settings.ts';
+export * from './schema/auth.js';
+import { users } from './schema/auth.js';
+export * from './schema/ai.js';
+export * from './schema/media.js';
+export { apiKeys, apiKeysRelations, apiUsageLogs, apiUsageLogsRelations, type APIKey, type NewAPIKey, type APIUsageLog, type NewAPIUsageLog } from './schema/api.js';
+export * from './schema/templates.js';
+export * from './schema/video.js';
+export * from './schema/trends.js';
+export * from './schema/settings.js';
 export declare const workflows: import("drizzle-orm/pg-core").PgTableWithColumns<{
     name: "workflows";
     schema: undefined;

@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 import { NodeType } from './types.js';
 import { isActionNode, isConditionNode, isStartNode, isEndNode } from './types.js';

@@ -4,6 +4,7 @@ import { voiceCache } from '../../database/schema/ai.js';
 import crypto from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
+import { sql } from 'drizzle-orm';
 export class TTSService {
     baseUrl = process.env.TTS_API_URL || 'http://localhost:8000';
     storagePath = process.env.TTS_STORAGE_PATH || './storage/audio';
@@ -103,10 +104,7 @@ export class TTSService {
             // Search by text hash (simplified - in production, use proper hash index)
             const cached = await db.select()
                 .from(voiceCache)
-                .where(
-            // This is simplified - you'd want to use a proper hash index
-            // For now, we'll check if file exists
-            )
+                .where(sql `true`)
                 .limit(1);
             if (cached.length > 0) {
                 const entry = cached[0];
@@ -124,7 +122,7 @@ export class TTSService {
                 }
                 catch {
                     // File doesn't exist, remove cache entry
-                    await db.delete(voiceCache).where({ id: entry.id });
+                    await db.delete(voiceCache).where(sql `${voiceCache.id} = ${entry.id}`);
                 }
             }
             return null;

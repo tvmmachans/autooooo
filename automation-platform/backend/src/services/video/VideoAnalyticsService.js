@@ -1,5 +1,5 @@
 import { db } from '../../database/index.js';
-import { videoAnalytics, platformUploads, videos } from '../../database/schema/video.js';
+import { videoAnalytics, platformUploads } from '../../database/schema/video.js';
 import { eq, and, gte, lte, desc } from 'drizzle-orm';
 export class VideoAnalyticsService {
     async recordAnalytics(videoId, platformUploadId, platform, data) {

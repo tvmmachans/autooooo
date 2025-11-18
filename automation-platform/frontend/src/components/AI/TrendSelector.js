@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React, { useState } from 'react';
+import { useState } from 'react';
 const PLATFORMS = [
     { value: 'youtube', label: 'YouTube' },
     { value: 'instagram', label: 'Instagram' },

@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-import React from 'react';
 import { Check, X, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';

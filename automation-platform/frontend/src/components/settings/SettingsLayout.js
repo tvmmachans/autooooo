@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { User, Building2, Plug, Settings as SettingsIcon, Palette, Shield, CreditCard, Code, Menu, X, } from 'lucide-react';

@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { db } from './database/index.js';
 import authRoutes from './routes/authRoutes.js';
 import workflowRoutes from './routes/workflowRoutes.js';
 const app = express();

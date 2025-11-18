@@ -1,5 +1,4 @@
-import { pgTable, serial, text, timestamp, integer, boolean, uuid, index, uniqueIndex } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
+import { pgTable, serial, text, timestamp, integer, boolean, index, uniqueIndex } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 // Roles table with predefined permissions
 export const roles = pgTable('roles', {

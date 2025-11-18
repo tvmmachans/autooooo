@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 export const Toggle = ({ enabled, onChange, label, description, disabled = false, size = 'md', }) => {

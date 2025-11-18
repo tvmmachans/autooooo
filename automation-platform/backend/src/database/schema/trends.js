@@ -1,5 +1,4 @@
 import { pgTable, serial, text, timestamp, jsonb, integer, boolean, index, real, uuid } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
 import { relations } from 'drizzle-orm';
 // Trend sources - track different data sources
 export const trendSources = pgTable('trend_sources', {

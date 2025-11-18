@@ -1,4 +1,4 @@
-import { BaseNode, createNode } from './nodes/BaseNode.js';
+import { createNode } from './nodes/BaseNode.js';
 /**
  * Adapter class that bridges ExecutableNode interface with BaseNode implementations
  * This allows the WorkflowEngine to use BaseNode classes through the ExecutableNode interface

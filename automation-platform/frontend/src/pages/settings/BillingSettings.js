@@ -1,5 +1,4 @@
 import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
-import React from 'react';
 import { SettingsSection } from '../../components/settings/SettingsSection';
 import { SettingItem } from '../../components/settings/SettingItem';
 import { Button } from '../../components/ui/Button';

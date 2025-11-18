@@ -1,6 +1,6 @@
 import { db } from '../../database/index.js';
-import { trendData, trendHistory, NewTrendHistory } from '../../database/schema/trends.js';
-import { eq, and, gte, desc } from 'drizzle-orm';
+import { trendData, trendHistory } from '../../database/schema/trends.js';
+import { eq, and, desc } from 'drizzle-orm';
 export class TrendAnalysisService {
     /**
      * Calculate comprehensive trend score

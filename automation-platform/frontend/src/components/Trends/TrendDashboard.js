@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 export const TrendDashboard = ({ region = 'IN', language = 'english', }) => {
     const [trends, setTrends] = useState([]);
     const [loading, setLoading] = useState(true);

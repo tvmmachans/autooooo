@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Copy, Eye, EyeOff, Trash2, Plus, Check } from 'lucide-react';
 import { Button } from '../ui/Button';

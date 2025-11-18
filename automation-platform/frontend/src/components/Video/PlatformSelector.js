@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React from 'react';
 const PLATFORMS = [
     { value: 'youtube', label: 'YouTube', icon: '📺' },
     { value: 'instagram', label: 'Instagram Reels', icon: '📷' },

@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import React, { useState } from 'react';
+import { useState } from 'react';
 const LANGUAGES = [
     { value: 'malayalam', label: 'Malayalam' },
     { value: 'english', label: 'English' },

@@ -1,6 +1,6 @@
 import { db, dbUtils, withTransaction } from '../database/index.js';
 import { executions, executionLogs, workflows } from '../database/schema.js';
-import { eq, and, or, desc, asc, sql, inArray, gte, lte } from 'drizzle-orm';
+import { eq, and, desc, asc, sql, inArray, gte, lte } from 'drizzle-orm';
 import { workflowEngine } from '../engine/WorkflowEngine.js';
 // Enhanced ExecutionService with bulk operations and real-time updates
 export class ExecutionService {

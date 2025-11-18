@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, jsonb, integer, boolean, index, real, bigint } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, jsonb, integer, index, real, bigint } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { users } from './auth.js';
 import { mediaFiles } from './media.js';

@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import fs from 'fs/promises';
 import path from 'path';
 import { db } from '../../database/index.js';
-import { videos, videoAssets, NewVideo } from '../../database/schema/video.js';
+import { videos, videoAssets } from '../../database/schema/video.js';
 
 const execAsync = promisify(exec);
 
@@ -123,10 +123,14 @@ export class VideoCompositionService {
         status: 'completed',
       }).returning();
 
+      if (!video) {
+        throw new Error('Failed to persist composed video');
+      }
+
       // Save video assets
       if (config.assets.length > 0) {
         await db.insert(videoAssets).values(
-          config.assets.map((asset, index) => ({
+          config.assets.map((asset) => ({
             videoId: video.id,
             assetType: asset.type,
             source: 'local',
@@ -134,7 +138,7 @@ export class VideoCompositionService {
             startTime: asset.startTime,
             duration: asset.duration,
             position: asset.position,
-            scale: asset.scale || 1.0,
+            scale: asset.scale ?? 1.0,
           }))
         );
       }
@@ -144,7 +148,7 @@ export class VideoCompositionService {
         videoPath: outputPath,
         duration: metadata.duration,
         fileSize: metadata.fileSize,
-        thumbnailUrl,
+        ...(thumbnailUrl ? { thumbnailUrl } : {}),
       };
     } catch (error: any) {
       // Clean up on error
@@ -161,6 +165,9 @@ export class VideoCompositionService {
 
     for (let i = 0; i < assets.length; i++) {
       const asset = assets[i];
+      if (!asset) {
+        continue;
+      }
       const ext = asset.type === 'image' ? 'jpg' : 'mp4';
       const assetPath = path.join(tempDir, `asset_${i}.${ext}`);
       await this.downloadFile(asset.url, assetPath);

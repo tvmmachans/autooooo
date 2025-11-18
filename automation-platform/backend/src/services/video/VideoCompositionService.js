@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import fs from 'fs/promises';
 import path from 'path';
 import { db } from '../../database/index.js';
-import { videos, videoAssets, NewVideo } from '../../database/schema/video.js';
+import { videos, videoAssets } from '../../database/schema/video.js';
 const execAsync = promisify(exec);
 export class VideoCompositionService {
     storagePath;
@@ -72,16 +72,21 @@ export class VideoCompositionService {
             }).returning();
             // Save video assets
             if (config.assets.length > 0) {
-                await db.insert(videoAssets).values(config.assets.map((asset, index) => ({
-                    videoId: video.id,
-                    assetType: asset.type,
-                    source: 'local',
-                    url: asset.url,
-                    startTime: asset.startTime,
-                    duration: asset.duration,
-                    position: asset.position,
-                    scale: asset.scale || 1.0,
-                })));
+                await db.insert(videoAssets).values(config.assets.map((asset, index) => {
+                    if (!asset)
+                        return null; // Skip undefined assets
+                    return {
+                        videoId: video.id,
+                        assetType: asset.type,
+                        source: 'local',
+                        url: asset.url,
+                        startTime: asset.startTime,
+                        duration: asset.duration,
+                        position: asset.position,
+                        scale: asset.scale || 1.0,
+                    };
+                }).filter(Boolean) // Remove null entries
+                );
             }
             return {
                 videoUrl,

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { db } from '../../database/index.js';
-import { trendData, trendSources, NewTrendData } from '../../database/schema/trends.js';
+import { trendData, trendSources } from '../../database/schema/trends.js';
+import type { NewTrendData } from '../../database/schema/trends.js';
 import { eq, and } from 'drizzle-orm';
 
 export interface YouTubeTrend {
@@ -211,16 +212,24 @@ export class YouTubeTrendsService {
         .where(eq(trendData.sourceId, source[0].id))
         .limit(20);
 
-      return cached.map(t => ({
+      return cached.map(t => {
+        const metadata = (t.metadata as {
+          videoId?: string;
+          title?: string;
+          channelName?: string;
+        } | null) ?? null;
+
+        return {
         keyword: t.keyword,
-        videoId: t.metadata?.videoId || '',
-        title: t.metadata?.title || '',
-        views: t.volume || 0,
-        likes: 0,
-        category: t.category || 'general',
-        channelName: t.metadata?.channelName || '',
-        publishedAt: new Date(),
-      }));
+          videoId: metadata?.videoId || '',
+          title: metadata?.title || '',
+          views: t.volume || 0,
+          likes: 0,
+          category: t.category || 'general',
+          channelName: metadata?.channelName || '',
+          publishedAt: new Date(),
+        };
+      });
     }
 
     return [];
