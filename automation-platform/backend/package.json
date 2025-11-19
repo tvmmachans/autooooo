@@ -1,60 +1,20 @@
 {
   "name": "automation-platform-backend",
   "version": "1.0.0",
-  "description": "Backend for automation platform using Drizzle ORM",
+  "description": "Backend for automation platform - Railway deployment ready",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "dev": "tsx src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "type-check": "tsc --noEmit",
-    "migrate": "tsx node_modules/drizzle-kit/bin.cjs generate",
-    "db:generate": "tsx node_modules/drizzle-kit/bin.cjs generate",
-    "db:push": "tsx node_modules/drizzle-kit/bin.cjs push",
-    "db:migrate": "tsx node_modules/drizzle-kit/bin.cjs migrate",
-    "db:verify": "tsx scripts/verify-connection.ts",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
   },
   "dependencies": {
-    "axios": "^1.6.2",
-    "bcryptjs": "^2.4.3",
-    "bullmq": "^4.15.0",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
-    "drizzle-kit": "^0.31.7",
-    "drizzle-orm": "^0.44.7",
-    "express": "^4.18.2",
-    "helmet": "^7.1.0",
-    "ioredis": "^5.3.2",
-    "jsonwebtoken": "^9.0.2",
-    "multer": "^1.4.5-lts.1",
-    "node-cron": "^3.0.3",
-    "postgres": "^3.4.3",
-    "sharp": "^0.33.0",
-    "uuid": "^9.0.1",
-    "winston": "^3.11.0",
-    "ws": "^8.14.2",
-    "zod": "^3.22.4"
+    "express": "^4.18.2"
   },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/jest": "^29.5.11",
-    "@types/jsonwebtoken": "^9.0.5",
-    "@types/multer": "^1.4.11",
-    "@types/node": "^20.10.0",
-    "@types/node-cron": "^3.0.11",
-    "@types/uuid": "^9.0.7",
-    "@types/ws": "^8.5.9",
-    "jest": "^29.7.0",
-    "nodemon": "^3.0.2",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.20.6",
-    "typescript": "^5.3.3"
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }

@@ -1,51 +1,102 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
-import authRoutes from './routes/authRoutes.js';
-import workflowRoutes from './routes/workflowRoutes.js';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 // Middleware
-app.use(helmet());
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    credentials: true
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
-// Health check
+
+// Health check endpoint for Railway monitoring
 app.get('/health', (req, res) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.status(200).json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development'
+  });
 });
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/workflows', workflowRoutes);
-// Import additional routes
-import mediaRoutes from './routes/mediaRoutes.js';
-import apiRoutes from './routes/apiRoutes.js';
-import settingsRoutes from './routes/settingsRoutes.js';
-app.use('/api/media', mediaRoutes);
-app.use('/api/api', apiRoutes);
-app.use('/api/settings', settingsRoutes);
-// Error handler (must be last)
-import { errorHandler } from './middleware/errorHandler.js';
-app.use(errorHandler);
+
+// Root endpoint with API information
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Automation Platform API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/health',
+      api: '/api'
+    }
+  });
+});
+
+// API placeholder endpoint
+app.get('/api', (req, res) => {
+  res.json({ 
+    message: 'API endpoint',
+    status: 'ready',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // 404 handler
 app.use('*', (req, res) => {
-    res.status(404).json({ error: 'Route not found' });
+  res.status(404).json({ 
+    error: 'Route not found',
+    path: req.originalUrl
+  });
 });
-// Error handler is now imported above
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(err.status || 500).json({ 
+    error: err.message || 'Internal server error',
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+  });
+});
+
 // Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🏥 Health check: http://localhost:${PORT}/health`);
 });
+
 // Graceful shutdown
-process.on('SIGTERM', () => {
-    console.log('SIGTERM received, shutting down gracefully');
+const shutdown = (signal) => {
+  console.log(`${signal} received, shutting down gracefully`);
+  server.close(() => {
+    console.log('Server closed');
     process.exit(0);
+  });
+  
+  // Force close after 10 seconds
+  setTimeout(() => {
+    console.error('Forcing shutdown after timeout');
+    process.exit(1);
+  }, 10000);
+};
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
+
+// Handle uncaught errors
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  shutdown('uncaughtException');
 });
-process.on('SIGINT', () => {
-    console.log('SIGINT received, shutting down gracefully');
-    process.exit(0);
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  shutdown('unhandledRejection');
 });
-//# sourceMappingURL=index.js.map
