@@ -23,12 +23,12 @@ Your `backend/package.json` is already configured correctly:
    Server should start on `http://localhost:3001`
 
 2. **Deploy to Render**:
-   - Push your code to GitHub
+   - Push your code to GitHub (make sure `render.yaml` is in the repository root)
    - Go to [Render Dashboard](https://dashboard.render.com)
    - Click **New +** → **Blueprint**
    - Connect your GitHub repository
-   - Render will automatically detect `render.yaml` in `automation-platform/backend/`
-   - **IMPORTANT**: Set the **Root Directory** to `automation-platform/backend`
+   - Render will automatically detect `render.yaml` in the repository root
+   - The `render.yaml` already specifies `rootDir: automation-platform/backend`
    - Render will use the configuration from `render.yaml`
    - Deploy!
 
@@ -132,11 +132,13 @@ When ready to add PostgreSQL:
 ## File Structure
 
 ```
+Repository Root:
+├── render.yaml           # Render Blueprint configuration (in root)
+
 automation-platform/backend/
 ├── src/
 │   └── index.js          # Main server file (JavaScript)
 ├── package.json          # Simplified dependencies
-├── render.yaml           # Render configuration
 └── env.template          # Environment variables template
 ```
 

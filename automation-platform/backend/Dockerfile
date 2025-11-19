@@ -6,17 +6,14 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN npm ci --only=production
 
 # Copy source code
-COPY . .
-
-# Build TypeScript
-RUN npm run build
+COPY src ./src
 
 # Expose port
 EXPOSE 3001
 
-# Start server
+# Start server (no build step needed - pure JavaScript)
 CMD ["npm", "start"]
 
