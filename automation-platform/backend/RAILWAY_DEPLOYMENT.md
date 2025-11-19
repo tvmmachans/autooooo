@@ -2,10 +2,15 @@
 
 This backend is configured for zero-build deployment on Railway. No TypeScript compilation required!
 
+## ⚠️ Important: Root Package.json Removed
+
+The root `package.json` has been **deleted** to prevent Railway from running TypeScript build commands from the root directory. Railway will now use the `automation-platform/backend/package.json` instead.
+
 ## Quick Deploy Steps
 
 1. **Install dependencies locally** (optional, for testing):
    ```bash
+   cd automation-platform/backend
    npm install
    ```
 
@@ -17,6 +22,7 @@ This backend is configured for zero-build deployment on Railway. No TypeScript c
 
 3. **Deploy to Railway**:
    - Connect your GitHub repository to Railway
+   - **IMPORTANT**: Set the **Root Directory** to `automation-platform/backend` in Railway project settings
    - Railway will automatically detect the `railway.toml` configuration
    - Set environment variables in Railway dashboard (see below)
    - Deploy!
@@ -40,11 +46,19 @@ Railway will automatically monitor the `/health` endpoint:
 
 ## What Changed
 
+✅ **Removed root package.json** - Prevents Railway from running build commands from root
 ✅ **Removed TypeScript** - Pure JavaScript now
 ✅ **No build step** - Direct execution with `node src/index.js`
 ✅ **Minimal dependencies** - Only Express, CORS, and dotenv
 ✅ **Railway configured** - `railway.toml` with health checks
 ✅ **Zero compilation errors** - No `tsc` permission issues
+
+## Railway Configuration
+
+**Critical Step**: In Railway dashboard:
+1. Go to your project **Settings**
+2. Set **Root Directory** to: `automation-platform/backend`
+3. This ensures Railway uses the correct `package.json` and `railway.toml`
 
 ## File Structure
 

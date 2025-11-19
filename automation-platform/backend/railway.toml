@@ -9,3 +9,7 @@ healthcheckTimeout = 100
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
 
+# Ensure Railway uses the backend directory
+[build.env]
+NODE_ENV = "production"
+
