@@ -1,7 +1,7 @@
 {
   "name": "automation-platform-backend",
   "version": "1.0.0",
-  "description": "Backend for automation platform - Railway deployment ready",
+  "description": "Backend for automation platform - Render deployment ready",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
